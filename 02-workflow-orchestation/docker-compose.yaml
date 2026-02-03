@@ -58,7 +58,12 @@ services:
       - kestra_data:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/kestra-wd:/tmp/kestra-wd
+      # Monta el fichero de credenciales de GCP en el contenedor.
+      # Asegúrate de que tu fichero se llame 'gcp-credentials.json' y esté en el mismo directorio que este docker-compose.yaml
+      - ./gcp-credentials.json:/app/gcp-credentials.json
     environment:
+      # Establece la variable de entorno para que las librerías de cliente de GCP encuentren las credenciales.
+      GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-credentials.json
       KESTRA_CONFIGURATION: |
         datasources:
           postgres:
